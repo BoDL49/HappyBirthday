@@ -399,11 +399,11 @@
 
     function success() {
       const now = new Date().getTime();
-      // if (now < targetDate) {
-      //   overlayMessage.style.display = 'flex'; // Hiển thị thông báo chờ
-      //   showToast('Vui lòng chờ đến ngày 12/10', 'error');
-      //   return;
-      //}
+      if (now < targetDate) {
+        overlayMessage.style.display = 'flex'; // Hiển thị thông báo chờ
+        showToast('Vui lòng chờ đến ngày 12/10', 'error');
+        return;
+      }
 
       // Nếu đúng mật khẩu và ngày đã đến, chuyển hướng
       display.classList.add('success');
@@ -470,7 +470,7 @@
     // Đếm ngược
     function updateCountdown() {
       const now = new Date().getTime();
-      const distance = 0;
+      const distance = targetDate - now;
 
       if (distance <= 0) {
         countdownElement.innerHTML = "Đến ngày 12/10 rồi! ";
