@@ -403,7 +403,7 @@
     /* Start Audio Button */
     .start-audio-btn {
       position: fixed;
-      top: 60%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: linear-gradient(135deg, var(--primary), #ff6b9d);
@@ -467,7 +467,7 @@
 </head>
 <body>
   <!-- Start Audio Button -->
-  <button id="startAudioBtn" class="start-audio-btn">
+  <button id="startAudioBtn" class="start-audio-btn" >
     🎵 Bấm để bắt đầu nhạc
   </button>
 
@@ -553,6 +553,7 @@
     const toast = document.getElementById('toast');
     const countdownElement = document.getElementById('countdown');
     const overlayMessage = document.getElementById('overlay-message');
+    const audio = document.getElementById("startAudioBtn");
 
     // Audio elements
     const startAudioBtn = document.getElementById('startAudioBtn');
@@ -732,6 +733,10 @@
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
+
+      if (distance > 0){
+        audio.hidden = true;
+      } 
 
       if (distance <= 0) {
         countdownElement.innerHTML = "Đến ngày 12/10 rồi! ";

@@ -99,6 +99,8 @@
   </style>
 </head>
 <body>
+  <audio id="bgm" src="/audio/chucmung.mp3" preload="auto" loop playsinline></audio>
+
   <div class="message-container">
     <div class="message">
       🎉 Chúc Mừng Sinh Nhật Bảo Thy! 🎉
@@ -113,6 +115,43 @@
 
   <!-- Nút Quà nè -->
   <button class="btn-gift" onclick="window.location.href='galaxy.html'">Quà nè</button>
+
+  <script>
+    // Cố gắng tự phát khi vào trang; nếu bị chặn, phát im lặng rồi mở tiếng khi người dùng chạm/lượt đầu tiên.
+    document.addEventListener('DOMContentLoaded', async () => {
+      const audio = document.getElementById('bgm');
+      if (!audio) return;
+
+      try {
+        await audio.play(); // thử phát có tiếng
+      } catch (err) {
+        audio.muted = true;
+        try {
+          await audio.play();
+          const unmute = () => {
+            audio.muted = false;
+            document.removeEventListener('click', unmute);
+            document.removeEventListener('touchstart', unmute);
+            document.removeEventListener('keydown', unmute);
+          };
+          document.addEventListener('click', unmute, { once: true });
+          document.addEventListener('touchstart', unmute, { once: true });
+          document.addEventListener('keydown', unmute, { once: true });
+        } catch (e2) {
+          // Trường hợp hiếm: đợi lần chạm/phím đầu để phát
+          const resume = async () => {
+            try { await audio.play(); } catch (_) {}
+            document.removeEventListener('click', resume);
+            document.removeEventListener('touchstart', resume);
+            document.removeEventListener('keydown', resume);
+          };
+          document.addEventListener('click', resume, { once: true });
+          document.addEventListener('touchstart', resume, { once: true });
+          document.addEventListener('keydown', resume, { once: true });
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
